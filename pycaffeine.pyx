@@ -1,7 +1,7 @@
 cimport pycaffeine
 
 cdef class CafDeque:
-    cdef pycaffeine.caf_deque_s* _c_deque
+    cdef pycaffeine.deque_t* _c_deque
 
     def __cinit__(self):
         self._c_deque = pycaffeine.deque_create()

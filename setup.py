@@ -4,9 +4,9 @@ from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
 ext_modules=[
-    Extension("nessdbwrapper",
-        sources=["nessdbwrapper.pyx"],
-        libraries=["lib/nessdb/nessdb"])
+    Extension("pycaffeine",
+        sources=["pycaffeine.pyx"],
+        libraries=["lib/caffeine/caffeine"])
 ]
 
 class CleanCommand(Command):
@@ -18,10 +18,10 @@ class CleanCommand(Command):
         self.cwd = os.getcwd()
     def run(self):
         assert os.getcwd() == self.cwd, 'Must be in package root: %s' % self.cwd
-        os.system('rm -rf ./build ./nessdbwrapper.c ./nessdbwrapper.so')
+        os.system('rm -rf ./build ./pycaffeine.c ./pycaffeine.so')
 
 setup(
-    name = "NessDB",
+    name = "PyCaffeine",
     cmdclass = {"build_ext": build_ext, "clean": CleanCommand},
     ext_modules = ext_modules
 )
