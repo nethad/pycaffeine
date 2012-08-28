@@ -1,0 +1,3 @@
+[submodule "lib/caffeine"]
+	path = lib/caffeine
+	url = git://github.com/dmw/caffeine.git
