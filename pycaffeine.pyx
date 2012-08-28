@@ -1,3 +1,4 @@
+from libc.stdlib cimport *
 cimport pycaffeine
 
 cdef class CafDeque:

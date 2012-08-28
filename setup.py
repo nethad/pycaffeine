@@ -6,7 +6,7 @@ from Cython.Distutils import build_ext
 ext_modules=[
     Extension("pycaffeine",
         sources=["pycaffeine.pyx"],
-        libraries=["lib/caffeine/caffeine"])
+        libraries=["lib/caffeine/src/caffeine", "rt"])
 ]
 
 class CleanCommand(Command):
