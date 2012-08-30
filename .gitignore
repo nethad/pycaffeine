@@ -1,1 +1,4 @@
 .idea
+build/
+pycaffeine.c
+pycaffeine.so
