@@ -1,6 +1,11 @@
 from libc.stdlib cimport *
 cimport pycaffeine
 
+cdef int search_callback(void* ndata, void* data):
+    strndata = str(<char*>ndata)
+    strdata = str(<char*>data)
+    return cmp(strndata, strdata)
+
 cdef class CafDeque:
     cdef pycaffeine.deque_t* _c_deque
 
@@ -34,3 +39,24 @@ cdef class CafDeque:
         cdef char* value
         value = <char*> node.data
         return value
+
+    def __len__(self):
+        return pycaffeine.deque_length(self._c_deque)
+
+    def __contains__(self, item):
+        local_value = str(item)
+        cdef char* charvalue
+        charvalue = local_value
+        cdef void* result
+        cdef int (*srch)(void*,void*)
+        srch = search_callback
+        result = pycaffeine.deque_search(self._c_deque, charvalue, srch)
+        return (result is not NULL)
+
+ #   def __contains__(self, item):
+ #       local_value = str(item)
+ #       cdef char* charvalue
+ #       charvalue = local_value
+ #       cdef int affected_items
+ #       affected_items = deque_search_node(self._c_deque, charvalue)
+ #       return (affected_items > 0)
