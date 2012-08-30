@@ -20,3 +20,5 @@ cdef extern from "lib/caffeine/caf/caf_data_deque.h":
     caf_dequen_t* deque_pop (deque_t* lst)
     caf_dequen_t* deque_search_node (deque_t* lst, void* data)
     void* deque_search (deque_t* lst, void* data, int (*srch)(void* ndata, void* data))
+    void* deque_get (deque_t* lst, int pos)
+    int deque_set (deque_t* lst, int pos, void* data)

@@ -22,9 +22,6 @@ cdef class CafDeque:
         rv = pycaffeine.deque_empty_list(self._c_deque)
         return (not rv)
 
-    def length(self):
-        return pycaffeine.deque_length(self._c_deque)
-
     def push(self, value):
         local_value = str(value)
         cdef char* charvalue
@@ -52,6 +49,36 @@ cdef class CafDeque:
         srch = search_callback
         result = pycaffeine.deque_search(self._c_deque, charvalue, srch)
         return (result is not NULL)
+
+    def __getitem__(self, key):
+        cdef void* result
+        try:
+            idx = int(key)
+            result = pycaffeine.deque_get(self._c_deque, idx)
+            if result is not NULL:
+                return <char*>result
+            else:
+                raise IndexError
+        except ValueError:
+            raise Exception("'key' is not an integer")
+
+    def __setitem__(self, key, value):
+        cdef char* charvalue
+        cdef int result
+        try:
+            idx = int(key)
+            local_value = str(value)
+            charvalue = local_value
+            result = pycaffeine.deque_set(self._c_deque, idx, charvalue)
+            if result is -1:
+                raise Exception, "error on item insert (k, v) = (%s, %s)" % (key, value)
+        except ValueError:
+            raise Exception, "'key' is not an integer"
+
+    # def __delitem__(self, key):
+
+    
+
 
  #   def __contains__(self, item):
  #       local_value = str(item)
